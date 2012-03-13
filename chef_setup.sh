@@ -6,5 +6,5 @@ gpg --keyserver keys.gnupg.net --recv-keys 83EF826A
 gpg --export packages@opscode.com | sudo tee /etc/apt/trusted.gpg.d/opscode-keyring.gpg > /dev/null
 apt-get update
 apt-get install opscode-keyring -y
-apt-get upgrade -y
+#apt-get upgrade -y
 #sudo apt-get install chef chef-server -y
