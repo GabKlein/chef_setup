@@ -30,9 +30,12 @@ EOF
 
 dns_public=`ec2metadata --public-hostname`
 
-su - ubuntu -c "knife client delete ip-10-117-79-4.ec2.internal"
+su - ubuntu -c "knife client delete ip-10-117-79-4.ec2.internal -y"
 su - ubuntu -c "sudo knife client create -a -n -f /etc/chef/client.pem `hostname -f`
 sed -e "s/^chef_server_url.*/chef_server_url\ \"http:\/\/$dns_public\:4000\"/g" /etc/chef/client.rb > /etc/chef/client.rb.tmp && mv /etc/chef/client.rb.tmp /etc/chef/client.rb
+
+/etc/init.d/chef-server restart
+/etc/init.d/chef-server-webui restart
 
 su - ubuntu -c "mkdir /tmp/.chef"
 su - ubuntu -c "mkdir /tmp/.chef/cookbooks"
