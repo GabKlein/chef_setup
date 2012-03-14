@@ -16,7 +16,7 @@ rabbitmqctl add_user chef changeme
 rabbitmqctl set_permissions -p /chef chef ".*" ".*" ".*"
 cd /home/ubuntu
 
-while [ ! -e /etc/chef/validation.pem ] && [ ! -e /etc/chef/webui.pem ] do
+while [ ! -e /etc/chef/validation.pem ] && [ ! -e /etc/chef/webui.pem ]; do
 	sleep 2
 done
 
