@@ -9,10 +9,17 @@
 #apt-get upgrade -y
 #sudo apt-get install chef chef-server -y
 
+apt-get install git sysstat -y
+
 rabbitmqctl add_vhost /chef
 rabbitmqctl add_user chef changeme
 rabbitmqctl set_permissions -p /chef chef ".*" ".*" ".*"
 cd /home/ubuntu
+
+while [ ! -e /etc/chef/validation.pem ] && [ ! -e /etc/chef/webui.pem ] do
+	sleep 2
+done
+
 su - ubuntu -c "mkdir -p ~/.chef"
 su - ubuntu -c "sudo cp /etc/chef/validation.pem /etc/chef/webui.pem ~/.chef"
 su - ubuntu -c "sudo chown -R ubuntu ~/.chef"
