@@ -41,5 +41,6 @@ validation_key           '/etc/chef/validation.pem'
 chef_server_url          'http://$dns_public:4000'
 cache_type               'BasicFile'
 cache_options( :path => '~/.chef/checksums' )
+cookbook_path			 ['.chef/cookbooks/']
 EOF
 su - ubuntu -c "cd /tmp && tar czvf /home/ubuntu/chef-cleint-config.tar.gz .chef"
