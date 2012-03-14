@@ -44,5 +44,3 @@ cache_options( :path => '~/.chef/checksums' )
 EOF
 cd /tmp
 su - ubuntu -c "tar czvf /home/ubuntu/chef-cleint-config.tar.gz .chef"
-
-uuencode /tmp/my-username.pem /tmp/my-username.pem | mail -s "Knife Client key" gabriel.klein.fr@gmail.com
