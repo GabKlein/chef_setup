@@ -45,5 +45,6 @@ cache_type               'BasicFile'
 cache_options( :path => '~/.chef/checksums' )
 cookbook_path			 ['.chef/cookbooks/']
 EOF
-rm -rf /tmp/.chef
 su - ubuntu -c "cd /tmp && tar czvf /home/ubuntu/chef-cleint-config.tar.gz .chef"
+rm -rf /tmp/.chef
+
