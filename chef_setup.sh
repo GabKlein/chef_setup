@@ -16,6 +16,10 @@ rabbitmqctl add_user chef changeme
 rabbitmqctl set_permissions -p /chef chef ".*" ".*" ".*"
 cd /home/ubuntu
 
+/etc/init.d/chef-server restart
+/etc/init.d/chef-server-webui restart
+/etc/init.d/chef-client restart
+
 while [ ! -e /etc/chef/validation.pem ] && [ ! -e /etc/chef/webui.pem ]; do
 	sleep 2
 done
@@ -41,10 +45,6 @@ su - ubuntu -c "knife node delete ip-10-117-79-4.ec2.internal -y"
 su - ubuntu -c "sudo chef-client"
 
 sed -e "s/^chef_server_url.*/chef_server_url\ \"http:\/\/$dns_public\:4000\"/g" /etc/chef/client.rb > /etc/chef/client.rb.tmp && mv /etc/chef/client.rb.tmp /etc/chef/client.rb
-
-/etc/init.d/chef-server restart
-/etc/init.d/chef-server-webui restart
-/etc/init.d/chef-client restart
 
 su - ubuntu -c "mkdir /tmp/.chef"
 su - ubuntu -c "mkdir /tmp/.chef/cookbooks"
