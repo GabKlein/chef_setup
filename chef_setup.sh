@@ -29,6 +29,11 @@ http://localhost:4000
 EOF
 
 dns_public=`ec2metadata --public-hostname`
+
+su - ubuntu -c "knife client delete ip-10-117-79-4.ec2.internal"
+su - ubuntu -c "sudo knife client create -a -n -f /etc/chef/client.pem `hostname -f`
+sed -e "s/^chef_server_url.*/chef_server_url\ \"http:\/\/$dns_public\:4000\"/g" /etc/chef/client.rb > /etc/chef/client.rb.tmp && mv /etc/chef/client.rb.tmp /etc/chef/client.rb
+
 su - ubuntu -c "mkdir /tmp/.chef"
 su - ubuntu -c "mkdir /tmp/.chef/cookbooks"
 su - ubuntu -c "cd /tmp/.chef/cookbooks && git init && touch test && git add test && git commit -m 'first commit'"
