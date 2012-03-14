@@ -27,3 +27,22 @@ http://localhost:4000
 /home/ubuntu/.chef/validation.pem
 
 EOF
+
+dns_public=`ec2metadata --public-hostname`
+su - ubuntu -c "mkdir /tmp/.chef"
+su - ubuntu -c "knife client create my-username -n -a -f /tmp/.chef/my-username.pem"
+su - ubuntu -c "cat > /tmp/.chef/knife.rb" <<EOF
+log_level                :info
+log_location             STDOUT
+node_name                'my-username'
+client_key               '~/.chef/my-username.pem'
+validation_client_name   'chef-validator'
+validation_key           '/etc/chef/validation.pem'
+chef_server_url          'http://$dns_public:4000'
+cache_type               'BasicFile'
+cache_options( :path => '~/.chef/checksums' )
+EOF
+cd /tmp
+su - ubuntu -c "tar czvf /home/ubuntu/chef-cleint-config.tar.gz .chef"
+
+uuencode /tmp/my-username.pem /tmp/my-username.pem | mail -s "Knife Client key" gabriel.klein.fr@gmail.com
