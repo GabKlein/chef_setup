@@ -30,6 +30,9 @@ EOF
 
 dns_public=`ec2metadata --public-hostname`
 su - ubuntu -c "mkdir /tmp/.chef"
+su - ubuntu -c "mkdir /tmp/.chef/cookbooks"
+su - ubuntu -c "cd /tmp/.chef/cookbooks && git init && touch test && git add test && git commit -m 'first commit'"
+su - ubuntu -c "knife cookbook site install chef --cookbook-path /tmp/.chef/cookbooks
 su - ubuntu -c "knife client create my-username -n -a -f /tmp/.chef/my-username.pem"
 su - ubuntu -c "cat > /tmp/.chef/knife.rb" <<EOF
 log_level                :info
@@ -43,4 +46,5 @@ cache_type               'BasicFile'
 cache_options( :path => '~/.chef/checksums' )
 cookbook_path			 ['.chef/cookbooks/']
 EOF
+rm -rf /tmp/.chef
 su - ubuntu -c "cd /tmp && tar czvf /home/ubuntu/chef-cleint-config.tar.gz .chef"
