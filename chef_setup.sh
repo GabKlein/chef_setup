@@ -42,4 +42,4 @@ chef_server_url          'http://$dns_public:4000'
 cache_type               'BasicFile'
 cache_options( :path => '~/.chef/checksums' )
 EOF
-su - ubuntu -c "cd /tmp && tar czvf /home/ubuntu/chef-cleint-config.tar.gz /tmp/.chef"
+su - ubuntu -c "cd /tmp && tar czvf /home/ubuntu/chef-cleint-config.tar.gz .chef"
